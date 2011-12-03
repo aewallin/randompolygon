@@ -6,7 +6,7 @@ print rpg.version()
 N = 10
 poly = rpg.rpg(N)
 
-print "generated polygon with",N,"vertices"
+print "generated random polygon with",N,"vertices"
 
 print "The vertices are:"
 n=0
