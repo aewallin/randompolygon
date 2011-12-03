@@ -60,12 +60,14 @@ bp::list rpg(int size) {
 
     // copy size points from the generator, eliminating duplicates
     // repeat until we have == size vertices
+    std::cout << "Waiting for " << size << " points..."<<std::flush;
     do {
         point_set.clear();
         CGAL::copy_n_unique( Point_generator(RADIUS), size,
                          std::back_inserter(point_set));
     } while( point_set.size() != size );
-    
+    std::cout << "Done.\n"<<std::flush;
+
     /*
     std::ostream_iterator< Point_2 >  out( std::cout, " " );
     std::cout << "From the following " << point_set.size() << " points "
