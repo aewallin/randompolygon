@@ -65,7 +65,7 @@ if __name__ == "__main__":
     myscreen.camera.SetClippingRange(-(zmult+1)*camPos,(zmult+1)*camPos)
     myscreen.camera.SetFocalPoint(0.0, 0, 0)
     
-    N=800
+    N=8192
     drawText(myscreen,N)
     t_before = time.time() 
     polygon= rpg.rpg(N)

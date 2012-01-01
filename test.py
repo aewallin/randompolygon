@@ -3,7 +3,7 @@ import rpg
 
 print rpg.version()
 
-N = 10
+N = 2000
 poly = rpg.rpg(N)
 
 print "generated random polygon with",N,"vertices"

@@ -7,9 +7,10 @@ import os
 import csv
 import sys
 
-import rpg
+
 
 def timeRPG(N):
+    import rpg
     t_before = time.time() 
     polygon= rpg.rpg(N)
     t_after = time.time() 
@@ -24,12 +25,12 @@ if __name__ == "__main__":
     # 10 -> 32 linesites
     # 14 -> 128
     # 18 -> 512
-    # 20 -> 1024        timeVoronoiSegs() segtype=1 (Release-build) (398-splitverts)
+    # 20 -> 1024        
     # 24 -> 4096
     # 28 -> 16384
     # 32 -> 65536
     # 33 -> 92681
-    # 34 -> 131072      timeVoronoiPoints() (Release-build)
+    # 34 -> 131072      
     # 35 -> 185363
     # 36 -> 262144
     
@@ -48,7 +49,6 @@ if __name__ == "__main__":
     for case in Nmax_list:
         n=case[0]
         Nmax=case[1]
-        #times = timeVoronoiPoints(Nmax)
         times = timeRPG(Nmax)
         print n," RPG for ",Nmax," took {0:.3f} seconds".format(sum(times)) 
 
