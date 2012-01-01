@@ -20,7 +20,7 @@ def timeRPG(N):
 if __name__ == "__main__":  
     print rpg.version()
     Nmax_exp_start = 5
-    Nmax_exp_end = 20
+    Nmax_exp_end = 22
     # 10 -> 32 linesites
     # 14 -> 128
     # 18 -> 512

@@ -31,7 +31,6 @@
 #include <CGAL/Random.h>
 #include <CGAL/algorithm.h>
 #include <CGAL/double.h>
-typedef double RT;
 
 #include <boost/python.hpp>
 namespace bp = boost::python;
@@ -41,6 +40,7 @@ namespace bp = boost::python;
 
 #include "version_string.hpp"
 
+typedef double RT;
 typedef CGAL::Simple_cartesian<RT>                        K;
 typedef K::Point_2                                        Point_2;
 typedef std::list<Point_2>                                Container;
@@ -53,7 +53,7 @@ typedef Polygon_2::Vertex_iterator VertexItr;
 const double RADIUS = 1.0;
 
 // generate polygon with size vertices
-bp::list rpg(int size) {   
+bp::list rpg2(int size, unsigned int seed=42) {   
     Polygon_2            polygon;
     std::list<Point_2>   point_set;
     CGAL::Random         rand;
@@ -62,7 +62,8 @@ bp::list rpg(int size) {
     // repeat until we have == size vertices
     do {
         point_set.clear();
-        CGAL::copy_n_unique( Point_generator(RADIUS), size,
+        CGAL::Random rnd(seed);
+        CGAL::copy_n_unique( Point_generator(RADIUS, rnd ), size,
                          std::back_inserter(point_set));
     } while( point_set.size() != size );
     
@@ -93,11 +94,17 @@ bp::list rpg(int size) {
     return output;
 }
 
+bp::list rpg1(int size) {
+    return rpg2(size,42); // fixme: take seed from clock?
+}
+
 std::string version() {
     return VERSION_STRING;
 }
 
 BOOST_PYTHON_MODULE(rpg) {
-    bp::def("rpg", rpg);
+    bp::def("rpg", rpg2); // two argument version
+    bp::def("rpg", rpg1); // one argument version
+
     bp::def("version", version);
 }
