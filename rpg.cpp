@@ -57,17 +57,18 @@ bp::list rpg2(int size, unsigned int seed=42) {
     Polygon_2            polygon;
     std::list<Point_2>   point_set;
     CGAL::Random         rand;
-
+    bool debug = false;
+    
     // copy size points from the generator, eliminating duplicates
     // repeat until we have == size vertices
-    std::cout << "Waiting for " << size << " points..."<<std::flush;
+    if (debug) std::cout << "Waiting for " << size << " points..."<<std::flush;
     do {
         point_set.clear();
         CGAL::Random rnd(seed);
         CGAL::copy_n_unique( Point_generator(RADIUS, rnd ), size,
                          std::back_inserter(point_set));
     } while( point_set.size() != size );
-    std::cout << "Done.\n"<<std::flush;
+    if (debug) std::cout << "Done.\n"<<std::flush;
 
     /*
     std::ostream_iterator< Point_2 >  out( std::cout, " " );
