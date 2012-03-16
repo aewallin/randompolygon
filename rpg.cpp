@@ -32,12 +32,10 @@
 #include <CGAL/algorithm.h>
 #include <CGAL/double.h>
 
-#include <boost/python.hpp>
-namespace bp = boost::python;
-
 #include <fstream>
 #include <list>
 
+#include "rpg.hpp"
 #include "version_string.hpp"
 
 typedef double RT;
@@ -53,7 +51,7 @@ typedef Polygon_2::Vertex_iterator VertexItr;
 const double RADIUS = 1.0;
 
 // generate polygon with size vertices
-bp::list rpg2(int size, unsigned int seed=42) {   
+std::vector< std::pair<double,double> > rpg(int size, unsigned int seed) {   
     Polygon_2            polygon;
     std::list<Point_2>   point_set;
     CGAL::Random         rand;
@@ -69,14 +67,6 @@ bp::list rpg2(int size, unsigned int seed=42) {
                          std::back_inserter(point_set));
     } while( point_set.size() != size );
     if (debug) std::cout << "Done.\n"<<std::flush;
-
-    /*
-    std::ostream_iterator< Point_2 >  out( std::cout, " " );
-    std::cout << "From the following " << point_set.size() << " points "
-             << std::endl;
-    std::copy(point_set.begin(), point_set.end(), out);
-    std::cout << std::endl;
-    */
     
     CGAL::random_polygon_2(point_set.size(), 
                            std::back_inserter(polygon),
@@ -86,28 +76,17 @@ bp::list rpg2(int size, unsigned int seed=42) {
     VertexItr it, it_end;
     it= polygon.vertices_begin();
     it_end = polygon.vertices_end();
-    bp::list output;
+    std::vector< std::pair<double,double> > output;
     for( ; it!=it_end; it++) {
-        bp::list point;
+        std::pair<double,double> point;
         //std::cout << "( " << it->x() << " , " << it->y() << " )"  << "\n";
-        point.append(it->x());
-        point.append(it->y());
-        output.append(point);
+        point.first = (it->x());
+        point.second = (it->y());
+        output.push_back(point);
     }
     return output;
 }
 
-bp::list rpg1(int size) {
-    return rpg2(size,42); // fixme: take seed from clock?
-}
-
 std::string version() {
     return VERSION_STRING;
-}
-
-BOOST_PYTHON_MODULE(rpg) {
-    bp::def("rpg", rpg2); // two argument version
-    bp::def("rpg", rpg1); // one argument version
-
-    bp::def("version", version);
 }
