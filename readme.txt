@@ -14,6 +14,7 @@ sudo make install
 
 
 todo:
+- build a debian and add to the PPA 
 - generate many polygons with N vertices (using the same random set of points) with one call
 - random vertices are now hard-coded to be inside a unit-circle. allow
   unit-box and scaling of the radius/size-of-box.
