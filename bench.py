@@ -6,11 +6,9 @@ import random
 import os
 import csv
 import sys
-
-
+import rpg
 
 def timeRPG(N):
-    import rpg
     t_before = time.time() 
     polygon= rpg.rpg(N)
     t_after = time.time() 
@@ -19,9 +17,9 @@ def timeRPG(N):
     return times
     
 if __name__ == "__main__":  
-    print rpg.version()
+    print "RPG version: ",rpg.version()
     Nmax_exp_start = 5
-    Nmax_exp_end = 22
+    Nmax_exp_end = 20
     # 10 -> 32 linesites
     # 14 -> 128
     # 18 -> 512
