@@ -1,5 +1,2 @@
-experimental C++ port, with python bindings, of True-type tracer, 
-forked from Chris Radek's site at http://timeguy.com/cradek/01276453959
-Original git repo at git://timeguy.com/truetype-tracer.git
-
-Converts FreeType font geometry to G-code, DXF, and other output formats.
+Random polygon generator using 2-opt algorithm from CGAL.
+A c++ library with python bindings.
