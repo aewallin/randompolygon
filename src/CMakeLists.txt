@@ -21,6 +21,12 @@ include_directories(${Python_Includes})
 # include the output directory, where the version_string.hpp file is generated
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 INCLUDE(version_string.cmake)
+# we can now parse the git-commit-id:
+STRING(REGEX REPLACE "([0-9][0-9]).*" "\\1" GIT_MAJOR_VERSION "${GIT_COMMIT_ID}" )
+STRING(REGEX REPLACE "[0-9][0-9].([0-9][0-9])-.*" "\\1" GIT_MINOR_VERSION "${GIT_COMMIT_ID}" )
+STRING(REGEX REPLACE "[0-9][0-9].[0-9][0-9]-(.*)-.*" "\\1" GIT_PATCH_VERSION "${GIT_COMMIT_ID}" )
+SET(MY_VERSION "${GIT_MAJOR_VERSION}.${GIT_MINOR_VERSION}.${GIT_PATCH_VERSION}" CACHE STRING "name")
+
 
 # a custom target that is always built
 #add_custom_target(
@@ -63,6 +69,7 @@ add_library(
     ${RPG_SRC_FILES}
 )
 set_target_properties(librandompolygon PROPERTIES PREFIX "")
+set_target_properties(librandompolygon PROPERTIES VERSION ${MY_VERSION}) 
 add_dependencies( 
     librandompolygon
     version_string 
@@ -87,6 +94,7 @@ add_library(
     rpg_py.cpp
 )
 set_target_properties(randompolygon PROPERTIES PREFIX "") 
+set_target_properties(randompolygon PROPERTIES VERSION ${MY_VERSION}) 
 target_link_libraries(randompolygon librandompolygon_static ${Boost_LIBRARIES} ) 
 add_dependencies( 
     randompolygon
@@ -94,11 +102,28 @@ add_dependencies(
 )
 
 # this figures out where to install the Python modules
+#execute_process(
+#    COMMAND python -c "from distutils.sysconfig import get_python_lib; print get_python_lib()"
+#    OUTPUT_VARIABLE Python_site_packages
+#    OUTPUT_STRIP_TRAILING_WHITESPACE
+#)
+#MESSAGE(STATUS "Python libraries will be installed to: " ${Python_site_packages})
+
+#
+# this figures out where to install the Python modules
+#
 execute_process(
-    COMMAND python -c "from distutils.sysconfig import get_python_lib; print get_python_lib()"
+    COMMAND python -c "from distutils.sysconfig import get_python_lib; print get_python_lib(0,0,\"/usr/local\")"
     OUTPUT_VARIABLE Python_site_packages
     OUTPUT_STRIP_TRAILING_WHITESPACE
-)
+) 
+MESSAGE(STATUS "Python module will be installed to: " ${Python_site_packages})    
+# on Ubuntu 11.10 this outputs: /usr/local/lib/python2.7/dist-packages
+
+# strip away /usr/local/  because that is what CMAKE_INSTALL_PREFIX is set to
+# also, since there is no leading "/", it makes ${Python_site_packages} a relative path.
+STRING(REGEX REPLACE "/usr/local/(.*)$" "\\1" Python_site_packages "${Python_site_packages}" )
+MESSAGE(STATUS "CMAKE_INSTALL_PREFIX is : " ${CMAKE_INSTALL_PREFIX})
 MESSAGE(STATUS "Python libraries will be installed to: " ${Python_site_packages})
 
 
