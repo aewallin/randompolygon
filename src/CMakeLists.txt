@@ -20,24 +20,26 @@ include_directories(${Python_Includes})
 #### create version_string.hpp, http://stackoverflow.com/questions/3780667
 # include the output directory, where the version_string.hpp file is generated
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
+INCLUDE(version_string.cmake)
+
 # a custom target that is always built
-add_custom_target(
-    version_string 
-    ALL
-    DEPENDS ver_string 
-)
+#add_custom_target(
+#    version_string 
+#    ALL
+#    DEPENDS ver_string 
+#)
 # creates version_string.hpp using cmake script
-add_custom_command(
-    OUTPUT ver_string ${CMAKE_CURRENT_BINARY_DIR}/version_string.hpp
-    COMMAND ${CMAKE_COMMAND} -DSOURCE_DIR=${CMAKE_CURRENT_SOURCE_DIR} -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
-                                            -P ${CMAKE_CURRENT_SOURCE_DIR}/version_string.cmake
-)
+#add_custom_command(
+#    OUTPUT ver_string ${CMAKE_CURRENT_BINARY_DIR}/version_string.hpp
+#    COMMAND ${CMAKE_COMMAND} -DSOURCE_DIR=${CMAKE_CURRENT_SOURCE_DIR} -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
+#                                            -P ${CMAKE_CURRENT_SOURCE_DIR}/version_string.cmake
+#)
 # version_string.hpp is a generated file
-set_source_files_properties(
-    ${CMAKE_CURRENT_BINARY_DIR}/version_string.hpp
-    PROPERTIES GENERATED TRUE
-    HEADER_FILE_ONLY TRUE
-)
+#set_source_files_properties(
+#    ${CMAKE_CURRENT_BINARY_DIR}/version_string.hpp
+#    PROPERTIES GENERATED TRUE
+#    HEADER_FILE_ONLY TRUE
+#)
 #### end create version_string.hpp
 
 
@@ -123,4 +125,29 @@ install(
     PERMISSIONS OWNER_READ GROUP_READ WORLD_READ
 )
     
-    
+########################################################################
+# "make package" stuff
+execute_process(
+    COMMAND dpkg --print-architecture
+    OUTPUT_VARIABLE DEB_ARCHITECTURE
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+MESSAGE(STATUS "DEB_ARCHITECTURE is: " ${DEB_ARCHITECTURE})
+include(deb/package_details.cmake)
+
+# "make spackage" will build a source package
+add_custom_target(spackage 
+              ${CMAKE_COMMAND} 
+              -D SRC_DIR:STRING=${CMAKE_SOURCE_DIR} 
+              -D MY_VERSION:STRING=${MY_VERSION} 
+              -C ${CMAKE_SOURCE_DIR}/deb/package_details.cmake
+              -P ${CMAKE_CURRENT_SOURCE_DIR}/deb/DebSourcePPA.cmake 
+            ) 
+
+MESSAGE(STATUS " 'make' builds the c++ library and the python module" )
+MESSAGE(STATUS " 'make package' builds a binary DEB package" )
+MESSAGE(STATUS " 'make spackage' builds a source DEB package" )
+MESSAGE(STATUS " 'make install' installs" )
+   
+# "make package" builds a binary debian package
+include(CPack) # this should be last

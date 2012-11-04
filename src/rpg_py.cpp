@@ -26,7 +26,7 @@ namespace bp = boost::python;
 
 #include "rpg.hpp"
 
-// generate polygon with size vertices
+// generate polygon with size vertices, and given seed for random-generator
 bp::list rpg2(int size, unsigned int seed=42) {   
     std::vector< std::pair<double,double> > point_list = rpg(size,seed);
     bp::list output;
@@ -45,7 +45,7 @@ bp::list rpg1(int size) {
 }
 
 BOOST_PYTHON_MODULE(rpg) {
-    bp::def("rpg", rpg2); // two argument version
-    bp::def("rpg", rpg1); // one argument version
+    bp::def("rpg", rpg2); // two argument call
+    bp::def("rpg", rpg1); // one argument call
     bp::def("version", version); // version string
 }
