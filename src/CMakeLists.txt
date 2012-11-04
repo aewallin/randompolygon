@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.6)
  
-Project(rpg_test)
+Project(randompolygon)
  
 FIND_PACKAGE(CGAL COMPONENTS Core  REQUIRED)
 include( ${CGAL_USE_FILE} )
@@ -56,38 +56,38 @@ set(RPG_SRC_FILES rpg.cpp)
 
 # the pure c++ shared library
 add_library(
-    librpg
+    librandompolygon
     SHARED
     ${RPG_SRC_FILES}
 )
-set_target_properties(librpg PROPERTIES PREFIX "")
+set_target_properties(librandompolygon PROPERTIES PREFIX "")
 add_dependencies( 
-    librpg
+    librandompolygon
     version_string 
 )
 # set_target_properties(libopenvoronoi PROPERTIES VERSION ${MY_VERSION}) 
 
 # static library, linked with the python module below
 add_library(
-    librpg_static
+    librandompolygon_static
     STATIC
     ${RPG_SRC_FILES}
 )
 add_dependencies( 
-    librpg_static
+    librandompolygon_static
     version_string 
 )
 
 # this makes the Python module
 add_library(
-    rpg
+    randompolygon
     MODULE
     rpg_py.cpp
 )
-set_target_properties(rpg PROPERTIES PREFIX "") 
-target_link_libraries(rpg librpg_static ${Boost_LIBRARIES} ) 
+set_target_properties(randompolygon PROPERTIES PREFIX "") 
+target_link_libraries(randompolygon librandompolygon_static ${Boost_LIBRARIES} ) 
 add_dependencies( 
-    rpg
+    randompolygon
     version_string 
 )
 
@@ -102,24 +102,24 @@ MESSAGE(STATUS "Python libraries will be installed to: " ${Python_site_packages}
 
 # this installs the python library
 install(
-    TARGETS rpg
+    TARGETS randompolygon
     LIBRARY DESTINATION ${Python_site_packages}
 )
 
 
 # this installs the c++ library
 install(
-    TARGETS librpg
+    TARGETS librandompolygon
     LIBRARY 
-    DESTINATION lib/rpg
-    ARCHIVE DESTINATION lib/rpg
+    DESTINATION lib/randompolygon
+    ARCHIVE DESTINATION lib/randompolygon
     PERMISSIONS OWNER_READ OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
 )
 
 # this installs the c++ include headers
 install(
     FILES ${RPG_INCLUDE_FILES}
-    DESTINATION include/rpg
+    DESTINATION include/randompolygon
     PERMISSIONS OWNER_READ GROUP_READ WORLD_READ
 )
     
