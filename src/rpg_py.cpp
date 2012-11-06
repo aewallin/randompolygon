@@ -44,7 +44,7 @@ bp::list rpg1(int size) {
     return rpg2(size,42); // fixme: take seed from clock?
 }
 
-BOOST_PYTHON_MODULE(rpg) {
+BOOST_PYTHON_MODULE(randompolygon) {
     bp::def("rpg", rpg2); // two argument call
     bp::def("rpg", rpg1); // one argument call
     bp::def("version", version); // version string

@@ -1,12 +1,13 @@
 import time
 import vtk
-import datetime
+#import datetime
 import math
-import random
-import os
+#import random
+#import os
 import csv
-import sys
-import rpg
+#import sys
+
+import randompolygon as rpg
 
 def timeRPG(N):
     t_before = time.time() 
@@ -32,7 +33,7 @@ if __name__ == "__main__":
     # 35 -> 185363
     # 36 -> 262144
     
-    random.seed(1)
+    
     exp_list = [0.5*x for x in range(Nmax_exp_start,Nmax_exp_end+1)]
     Nmax_list=[]
     n=5

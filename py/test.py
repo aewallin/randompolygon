@@ -1,5 +1,5 @@
 
-import rpg
+import randompolygon as rpg
 
 print rpg.version()
 

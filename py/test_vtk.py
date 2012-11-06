@@ -7,10 +7,10 @@ import time
 import vtk
 import datetime
 import math
-import random
-import os
+#import random
+#import os
 
-import rpg
+import randompolygon as rpg
 
 
 
@@ -79,6 +79,6 @@ if __name__ == "__main__":
     drawPolygon( myscreen, polygon )
 
     print "PYTHON All DONE."
-    writeFrame( w2if, lwr, N )
+    #writeFrame( w2if, lwr, N )
     myscreen.render()    
     myscreen.iren.Start()
