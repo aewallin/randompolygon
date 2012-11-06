@@ -11,15 +11,7 @@ set(CPACK_DEBIAN_PACKAGE_SECTION "science" CACHE STRING "name3")
 
 # these are dependencies required to build & run. they should work with launchpad or pbuilder also.
 set(DEBSRC_BUILD_DEPENDS debhelper python libboost-dev libboost-python-dev git libcgal-dev cmake  CACHE STRING "name4")
-
-# we need to explicitly list the libboost-python versions here. why??
-# quantal has 1.49.0
-# precise has 1.48.0
-# oneiric has 1.46.1
-# natty/maverick has 1.42.0
-# lucid has 1.40.0
 set(DEBSRC_PACKAGE_DEPENDS python git cmake 
-                #"libboost-python1.49.0 | libboost-python1.48.0 | libboost-python1.46.1 | libboost-python1.42.0 | libboost-python1.40.0"
                  libboost-python
                  libcgal-dev CACHE STRING "name")
 
