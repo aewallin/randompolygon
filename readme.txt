@@ -17,7 +17,14 @@ $ sudo add-apt-repository ppa:anders-e-e-wallin/cam
 $ sudo apt-get update
 $ sudo apt-get install randompolygon
 
-todo:
-- generate many polygons with N vertices (using the same random set of points) with one call
-- random vertices are now hard-coded to be inside a unit-circle. allow
+Ubuntu 13.10 notes. There is a bug in CGAL - it looks for boost 
+libraries in the wrong directory. See: 
+https://bugs.launchpad.net/ubuntu/+source/cgal/+bug/1242111 This can be 
+solved with two symbolic links 
+sudo ln -s /usr/lib/x86_64-linux-gnu/libboost_thread.so /usr/lib/libboost_thread.so
+and a similar link for libboost_system.so
+
+todo: - generate many polygons with N vertices (using the same random 
+set of points) with one call - random vertices are now hard-coded to be 
+inside a unit-circle. allow
   unit-box and scaling of the radius/size-of-box.

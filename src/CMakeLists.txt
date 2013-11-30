@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 2.6)
  
 Project(randompolygon)
- 
+
+# find CGAL 
 FIND_PACKAGE(CGAL COMPONENTS Core  REQUIRED)
 include( ${CGAL_USE_FILE} )
 
