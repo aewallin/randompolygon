@@ -15,7 +15,7 @@ import randompolygon as rpg
 
 
 def drawLine(myscreen, p1, p2):
-    myscreen.addActor( ovdvtk.Line( p1 = (p1[0],p1[1],0), p2=(p2[0],p2[1],0), color = ovdvtk.yellow ) )
+    myscreen.addActor( ovdvtk.Line( p1 = (p1[0],p1[1],0), p2=(p2[0],p2[1],0), color = ovdvtk.yellow2 ) )
 
 def writeFrame( w2if, lwr, n ):
     """ write a screenshot to disk """
@@ -29,6 +29,7 @@ def drawPolygon(myscreen, poly):
     prev = poly[-1] # initialize with last element
     for p in poly:
         drawLine(myscreen,prev,p)
+        print prev, p
         prev = p
 
 def drawText(myscreen, N=1):
@@ -52,14 +53,14 @@ if __name__ == "__main__":
     myscreen = ovdvtk.VTKScreen(width=1024, height=720) #(width=1920, height=1080)
     drawGithub(myscreen)
     # for screenshot writing:
-    w2if = vtk.vtkWindowToImageFilter()
-    w2if.SetInput(myscreen.renWin)
-    lwr = vtk.vtkPNGWriter()
-    lwr.SetInput( w2if.GetOutput() )
+    #w2if = vtk.vtkWindowToImageFilter()
+    #w2if.SetInput(myscreen.renWin)
+    #lwr = vtk.vtkPNGWriter()
+    #lwr.SetInput( w2if.GetOutput() )
     
     myscreen.render()
-    camPos = 1
-    zmult = 4
+    camPos = 100
+    zmult = 0.1
     # position the camera
     myscreen.camera.SetPosition(0, -camPos/float(1000), zmult*camPos) 
     myscreen.camera.SetClippingRange(-(zmult+1)*camPos,(zmult+1)*camPos)

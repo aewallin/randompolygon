@@ -1,7 +1,7 @@
 
 import randompolygon as rpg
 
-print rpg.version()
+print "This is randompolygon version ", rpg.version()
 
 #N = 2000
 N=100
