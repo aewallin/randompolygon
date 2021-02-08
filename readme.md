@@ -1,3 +1,6 @@
+Randompolygon
+=============
+
 Anders Wallin (anders.e.e.wallin "at" gmail.com)
 December 2011
 
@@ -28,3 +31,13 @@ todo: - generate many polygons with N vertices (using the same random
 set of points) with one call - random vertices are now hard-coded to be 
 inside a unit-circle. allow
   unit-box and scaling of the radius/size-of-box.
+
+Example polygons
+================
+These example random polygons are generated with the included Python script, and visualized with VTK.
+
+32 vertex example:
+![Image of 32_vertex_example](doc/32_vertex_example.png)
+
+1024 vertex example:
+![Image of 1024_vertex_example](doc/1024_vertex_example.png)
