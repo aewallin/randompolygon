@@ -10,13 +10,17 @@ add_definitions(-fPIC)
 
 # this figures out the Python include directories and adds them to the
 # header file search path
-execute_process(
-    COMMAND python-config --includes
-    COMMAND sed -r "s/-I//g; s/ +/;/g"
-    COMMAND tr -d '\n'
-    OUTPUT_VARIABLE Python_Includes
-)
-include_directories(${Python_Includes})
+#execute_process(
+#    COMMAND python-config --includes
+#    COMMAND sed -r "s/-I//g; s/ +/;/g"
+#    COMMAND tr -d '\n'
+#    OUTPUT_VARIABLE Python_Includes
+#)
+#include_directories(${Python_Includes})
+
+find_package(Python3 COMPONENTS Development Interpreter)
+MESSAGE(STATUS "Python3_Includes: " ${Python3_INCLUDE_DIRS})
+include_directories(${Python3_INCLUDE_DIRS})
 
 #### create version_string.hpp, http://stackoverflow.com/questions/3780667
 # include the output directory, where the version_string.hpp file is generated
@@ -113,25 +117,25 @@ add_dependencies(
 #
 # this figures out where to install the Python modules
 #
-execute_process(
-    COMMAND python -c "from distutils.sysconfig import get_python_lib; print get_python_lib(0,0,\"/usr/local\")"
-    OUTPUT_VARIABLE Python_site_packages
-    OUTPUT_STRIP_TRAILING_WHITESPACE
-) 
-MESSAGE(STATUS "Python module will be installed to: " ${Python_site_packages})    
+#execute_process(
+#    COMMAND python -c "from distutils.sysconfig import get_python_lib; print get_python_lib(0,0,\"/usr/local\")"
+#    OUTPUT_VARIABLE Python_site_packages
+#    OUTPUT_STRIP_TRAILING_WHITESPACE
+#) 
+#MESSAGE(STATUS "Python module will be installed to: " ${Python_site_packages})    
 # on Ubuntu 11.10 this outputs: /usr/local/lib/python2.7/dist-packages
 
 # strip away /usr/local/  because that is what CMAKE_INSTALL_PREFIX is set to
 # also, since there is no leading "/", it makes ${Python_site_packages} a relative path.
-STRING(REGEX REPLACE "/usr/local/(.*)$" "\\1" Python_site_packages "${Python_site_packages}" )
+#STRING(REGEX REPLACE "/usr/local/(.*)$" "\\1" Python_site_packages "${Python_site_packages}" )
 MESSAGE(STATUS "CMAKE_INSTALL_PREFIX is : " ${CMAKE_INSTALL_PREFIX})
-MESSAGE(STATUS "Python libraries will be installed to: " ${Python_site_packages})
+MESSAGE(STATUS "Python libraries will be installed to: " ${Python3_SITELIB})
 
 
 # this installs the python library
 install(
     TARGETS randompolygon
-    LIBRARY DESTINATION ${Python_site_packages}
+    LIBRARY DESTINATION ${Python3_SITELIB}
 )
 
 
