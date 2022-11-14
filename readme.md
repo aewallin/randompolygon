@@ -1,4 +1,4 @@
-    ![Build-badge](https://github.com/aewallin/randompolygon/actions/workflows/cmake-build.yml/badge.svg)
+![Build-badge](https://github.com/aewallin/randompolygon/actions/workflows/cmake-build.yml/badge.svg)
    
 Randompolygon
 =============
