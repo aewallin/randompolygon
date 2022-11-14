@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 2.6)
  
 Project(randompolygon)
+set(CMAKE_BUILD_TYPE Release)
 
 # find CGAL 
 FIND_PACKAGE(CGAL COMPONENTS Core  REQUIRED)
@@ -30,7 +31,7 @@ INCLUDE(version_string.cmake)
 STRING(REGEX REPLACE "([0-9][0-9]).*" "\\1" GIT_MAJOR_VERSION "${GIT_COMMIT_ID}" )
 STRING(REGEX REPLACE "[0-9][0-9].([0-9][0-9])-.*" "\\1" GIT_MINOR_VERSION "${GIT_COMMIT_ID}" )
 STRING(REGEX REPLACE "[0-9][0-9].[0-9][0-9]-(.*)-.*" "\\1" GIT_PATCH_VERSION "${GIT_COMMIT_ID}" )
-SET(MY_VERSION "${GIT_MAJOR_VERSION}.${GIT_MINOR_VERSION}.${GIT_PATCH_VERSION}" CACHE STRING "name")
+SET(MY_VERSION "${GIT_MAJOR_VERSION}.${GIT_MINOR_VERSION}.${GIT_PATCH_VERSION}" CACHE STRING "version")
 
 
 # a custom target that is always built
@@ -75,10 +76,10 @@ add_library(
 )
 set_target_properties(librandompolygon PROPERTIES PREFIX "")
 set_target_properties(librandompolygon PROPERTIES VERSION ${MY_VERSION}) 
-add_dependencies( 
-    librandompolygon
-    version_string 
-)
+#add_dependencies( 
+#    librandompolygon
+#    version_string 
+#)
 # set_target_properties(libopenvoronoi PROPERTIES VERSION ${MY_VERSION}) 
 
 # static library, linked with the python module below
@@ -87,10 +88,10 @@ add_library(
     STATIC
     ${RPG_SRC_FILES}
 )
-add_dependencies( 
-    librandompolygon_static
-    version_string 
-)
+#add_dependencies( 
+#    librandompolygon_static
+#    version_string 
+#)
 
 # this makes the Python module
 add_library(
@@ -101,10 +102,10 @@ add_library(
 set_target_properties(randompolygon PROPERTIES PREFIX "") 
 set_target_properties(randompolygon PROPERTIES VERSION ${MY_VERSION}) 
 target_link_libraries(randompolygon librandompolygon_static ${Boost_LIBRARIES} ) 
-add_dependencies( 
-    randompolygon
-    version_string 
-)
+#add_dependencies( 
+#    randompolygon
+#    version_string 
+#)
 
 # this figures out where to install the Python modules
 #execute_process(
